@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SPARK.ED | Ignite Your Future</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-yellow: #f4d03f;
+            --accent-gold: #ffcc33;
+            --deep-brown: #4d2600;
+            --soft-cream: #fdfae6;
+            --white: #ffffff;
+            --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+        * { box-sizing: border-box; scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Open Sans', sans-serif;
+            margin: 0;
+            background-color: var(--soft-cream);
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        /* Top-Left Circular Logo */
+        .header-logo-container {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 1100;
+        }
+
+        .logo-circle {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            border: 4px solid var(--primary-yellow);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            object-fit: cover;
+            background-color: white;
+            transition: var(--transition);
+        }
+
+        .logo-circle:hover {
+            transform: rotate(15deg) scale(1.1);
+        }
+
+        /* Navigation */
+        nav {
+            position: sticky;
+            top: 0;
+            background: var(--deep-brown);
+            padding: 15px;
+            text-align: right; /* Moved text to right to clear space for logo */
+            padding-right: 50px;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+
+        nav a {
+            color: var(--primary-yellow);
+            text-decoration: none;
+            margin: 0 15px;
+            font-weight: bold;
+            transition: var(--transition);
+            font-size: 0.9rem;
+        }
+
+        nav a:hover { color: var(--white); }
+
+        header {
+            background: var(--white);
+            padding: 80px 20px 40px;
+            text-align: center;
+            border-bottom: 8px solid var(--primary-yellow);
+        }
+
+        h1 {
+            font-family: 'Montserrat', sans-serif;
+            color: var(--deep-brown);
+            font-size: 3rem;
+            margin: 10px 0;
+        }
+
+        .container { max-width: 1100px; margin: auto; padding: 40px 20px; }
+
+        /* Interactive Info Panel (Replaces Alerts) */
+        #info-panel {
+            position: fixed;
+            right: -400px;
+            top: 0;
+            width: 350px;
+            height: 100%;
+            background: var(--white);
+            z-index: 1500;
+            box-shadow: -5px 0 20px rgba(0,0,0,0.2);
+            padding: 40px;
+            transition: var(--transition);
+        }
+
+        #info-panel.active { right: 0; }
+
+        .close-panel {
+            cursor: pointer;
+            font-size: 30px;
+            color: var(--deep-brown);
+            position: absolute;
+            top: 20px;
+            right: 20px;
+        }
+
+        /* Founder Section */
+        .founder-section {
+            background: var(--white);
+            padding: 40px;
+            border-radius: 20px;
+            margin: 40px 0;
+            display: flex;
+            align-items: center;
+            gap: 30px;
+            border: 2px solid var(--primary-yellow);
+        }
+
+        .founder-text h2 { margin-top: 0; color: var(--deep-brown); }
+
+        /* Grid & Timeline */
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
+        .card {
+            background: var(--white);
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            transition: var(--transition);
+            border-top: 5px solid var(--primary-yellow);
+        }
+        .card:hover { transform: translateY(-10px); }
+
+        .btn-interact {
+            background: var(--primary-yellow);
+            color: var(--deep-brown);
+            border: none;
+            padding: 12px 25px;
+            border-radius: 50px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 15px;
+        }
+
+        .timeline-box { background: var(--deep-brown); color: var(--white); padding: 50px; border-radius: 30px; margin-top: 60px; }
+        .timeline-item { padding: 20px; border-left: 3px solid var(--primary-yellow); margin-left: 20px; position: relative; }
+
+        #registration-modal {
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.8); justify-content: center; align-items: center; z-index: 2000;
+        }
+        .modal-content { background: var(--white); padding: 40px; border-radius: 20px; width: 90%; max-width: 500px; }
+
+        footer { background: var(--deep-brown); color: var(--white); text-align: center; padding: 40px; margin-top: 60px; }
+    </style>
+</head>
+<body>
+
+    <div class="header-logo-container">
+        <img src="1000126558.jpg" alt="SPARK.ED Logo" class="logo-circle">
+    </div>
+
+    <div id="info-panel">
+        <span class="close-panel" onclick="closePanel()">&times;</span>
+        <h2 id="panel-title" style="color: var(--deep-brown);"></h2>
+        <div id="panel-content" style="font-size: 1.1rem; line-height: 1.8;"></div>
+    </div>
+
+    <nav>
+        <a href="#about">About</a>
+        <a href="#curriculum">Curriculum</a>
+        <a href="#timeline">Roadmap</a>
+        <a href="javascript:void(0)" onclick="toggleModal()" style="background:var(--primary-yellow); color:var(--deep-brown); padding:8px 15px; border-radius:20px;">Join Us</a>
+    </nav>
+
+    <header>
+        <h1>SPARK.ED</h1>
+        <p style="font-weight: 600; color: #666; letter-spacing: 2px;">VISION • INDEPENDENT PASSION • BUILD IT</p>
+    </header>
+
+    <div class="container">
+        <section class="founder-section">
+            <div class="founder-text">
+                <span style="color: var(--accent-gold); font-weight: bold; text-transform: uppercase;">Meet the Founder</span>
+                <h2>Habiba Mohamed</h2>
+                <p>Guided by a mission to turn student visions into reality, Habiba Mohamed established SPARK.ED to bridge the gap between high school potential and elite academic success.</p>
+            </div>
+        </section>
+
+        <section id="about" style="text-align: center; margin-bottom: 60px;">
+            <h2 style="font-size: 2.5rem; color: var(--deep-brown);">Empowering Future Leaders</h2>
+            <p style="max-width: 750px; margin: auto; font-size: 1.1rem;">Sparked is an all-major inclusive platform helping students master research, excel in competitions, and navigate top-tier college admissions.</p>
+        </section>
+
+        <div class="grid" id="curriculum">
+            <div class="card">
+                <h2>Research & STEM</h2>
+                <p>Master the Scientific Method and Engineering Design Process (EDP).</p>
+                <button class="btn-interact" onclick="openPanel('Research', 'Our research module covers:<br>• Scientific Method Video Series<br>• High School Applications<br>• Professional Resource Sourcing (.edu/.org)')">Explore Module</button>
+            </div>
+
+            <div class="card">
+                <h2>Extracurriculars</h2>
+                <p>Learn how to build "Depth, Breadth, and Impact" through passion projects.</p>
+                <button class="btn-interact" onclick="openPanel('Extracurriculars', 'Strategic focus on:<br>• Passion Projects & Non-profits<br>• Summer Programs (YYGS, Pioneer)<br>• International Competitions')">Learn More</button>
+            </div>
+
+            <div class="card">
+                <h2>Admissions Strategy</h2>
+                <p>Navigate SATs, GPA, and crafting the perfect college list.</p>
+                <button class="btn-interact" onclick="openPanel('Admissions', 'Step-by-step guidance on:<br>• Motivational Letters<br>• Financial Aid & Scholarships<br>• Personal Statements')">Get Strategy</button>
+            </div>
+        </div>
+
+        <section class="timeline-box" id="timeline">
+            <h2 style="color: var(--primary-yellow); margin-bottom: 30px;">2026 Roadmap</h2>
+            <div class="timeline-item"><h3>Feb — Mar: Orientation</h3><p>Research basics and identifying personal passions.</p></div>
+            <div class="timeline-item"><h3>Mar — Apr: Competitions</h3><p>Preparing for honors and elite extracurricular activities.</p></div>
+            <div class="timeline-item"><h3>May — July: Workshops</h3><p>Technical skill building (Coding, Tinkercad, Design).</p></div>
+            <div class="timeline-item"><h3>Aug — Sept: Final Events</h3><p>Showcasing projects and final admissions prep.</p></div>
+        </section>
+    </div>
+
+    <div id="registration-modal">
+        <div class="modal-content">
+            <span style="float:right; cursor:pointer; font-size:24px;" onclick="toggleModal()">&times;</span>
+            <h2 style="color: var(--deep-brown);">Apply for Mentorship</h2>
+            <form onsubmit="event.preventDefault(); openPanel('Success!', 'Thank you for applying! Habiba Mohamed and the team will review your profile shortly.'); toggleModal();">
+                <input type="text" placeholder="Full Name" style="width:100%; padding:10px; margin:10px 0;" required>
+                <input type="email" placeholder="Email Address" style="width:100%; padding:10px; margin:10px 0;" required>
+                <button type="submit" class="btn-interact" style="width: 100%;">Submit</button>
+            </form>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 SPARK.ED | Founder: Habiba Mohamed</p>
+    </footer>
+
+    <script>
+        function toggleModal() {
+            const modal = document.getElementById('registration-modal');
+            modal.style.display = (modal.style.display === 'flex') ? 'none' : 'flex';
+        }
+
+        function openPanel(title, content) {
+            document.getElementById('panel-title').innerText = title;
+            document.getElementById('panel-content').innerHTML = content;
+            document.getElementById('info-panel').classList.add('active');
+        }
+
+        function closePanel() {
+            document.getElementById('info-panel').classList.remove('active');
+        }
+    </script>
+</body>
+</html>
