@@ -3,261 +3,255 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SPARK.ED | Ignite Your Future</title>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <title>SPARK.ED | Vision. Passion. Build.</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+    
     <style>
         :root {
-            --primary-yellow: #f4d03f;
-            --accent-gold: #ffcc33;
-            --deep-brown: #4d2600;
-            --soft-cream: #fdfae6;
+            --logo-yellow: #EAB308;
+            --logo-brown: #432818;
+            --logo-bg-cream: #FEFCE8;
             --white: #ffffff;
-            --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            --transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
         }
 
-        * { box-sizing: border-box; scroll-behavior: smooth; }
-
+        * { box-sizing: border-box; scroll-behavior: smooth; cursor: none; }
+        
         body {
             font-family: 'Open Sans', sans-serif;
             margin: 0;
-            background-color: var(--soft-cream);
-            color: #333;
+            background-color: var(--white);
+            color: var(--logo-brown);
             overflow-x: hidden;
         }
 
-        /* Top-Left Circular Logo */
-        .header-logo-container {
-            position: fixed;
-            top: 20px;
-            left: 20px;
-            z-index: 1100;
+        /* --- INTERACTIVE SUNFLOWER CURSOR --- */
+        #cursor-dot {
+            width: 6px; height: 6px; background: var(--logo-brown);
+            position: fixed; border-radius: 50%; pointer-events: none; z-index: 9999;
         }
-
-        .logo-circle {
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            border: 4px solid var(--primary-yellow);
-            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-            object-fit: cover;
-            background-color: white;
-            transition: var(--transition);
+        #cursor-outline {
+            width: 40px; height: 40px; 
+            border: 2px dashed var(--logo-yellow);
+            position: fixed; border-radius: 50%; pointer-events: none; z-index: 9998;
+            transition: transform 0.1s ease-out;
+            animation: rotateSunflower 8s linear infinite;
         }
+        @keyframes rotateSunflower { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
 
-        .logo-circle:hover {
-            transform: rotate(15deg) scale(1.1);
-        }
-
-        /* Navigation */
+        /* --- NAVIGATION --- */
         nav {
-            position: sticky;
-            top: 0;
-            background: var(--deep-brown);
-            padding: 15px;
-            text-align: right; /* Moved text to right to clear space for logo */
-            padding-right: 50px;
-            z-index: 1000;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
-        }
-
-        nav a {
-            color: var(--primary-yellow);
-            text-decoration: none;
-            margin: 0 15px;
-            font-weight: bold;
-            transition: var(--transition);
-            font-size: 0.9rem;
-        }
-
-        nav a:hover { color: var(--white); }
-
-        header {
-            background: var(--white);
-            padding: 80px 20px 40px;
-            text-align: center;
-            border-bottom: 8px solid var(--primary-yellow);
-        }
-
-        h1 {
-            font-family: 'Montserrat', sans-serif;
-            color: var(--deep-brown);
-            font-size: 3rem;
-            margin: 10px 0;
-        }
-
-        .container { max-width: 1100px; margin: auto; padding: 40px 20px; }
-
-        /* Interactive Info Panel (Replaces Alerts) */
-        #info-panel {
             position: fixed;
-            right: -400px;
-            top: 0;
-            width: 350px;
-            height: 100%;
-            background: var(--white);
-            z-index: 1500;
-            box-shadow: -5px 0 20px rgba(0,0,0,0.2);
-            padding: 40px;
-            transition: var(--transition);
-        }
-
-        #info-panel.active { right: 0; }
-
-        .close-panel {
-            cursor: pointer;
-            font-size: 30px;
-            color: var(--deep-brown);
-            position: absolute;
-            top: 20px;
-            right: 20px;
-        }
-
-        /* Founder Section */
-        .founder-section {
-            background: var(--white);
-            padding: 40px;
-            border-radius: 20px;
-            margin: 40px 0;
+            top: 0; width: 100%;
+            padding: 15px 50px;
             display: flex;
+            justify-content: space-between;
             align-items: center;
-            gap: 30px;
-            border: 2px solid var(--primary-yellow);
+            z-index: 1000;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 2px solid var(--logo-yellow);
         }
+        .nav-logo { display: flex; align-items: center; gap: 12px; font-family: 'Montserrat'; font-weight: 800; font-size: 1.5rem; }
+        .nav-logo img { height: 40px; width: 40px; border-radius: 50%; object-fit: cover; }
+        nav a { color: var(--logo-brown); text-decoration: none; margin-left: 25px; font-weight: 700; font-size: 0.75rem; text-transform: uppercase; }
 
-        .founder-text h2 { margin-top: 0; color: var(--deep-brown); }
+        /* --- HERO --- */
+        .hero { height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; background: var(--logo-bg-cream); padding: 20px; }
+        .motto-bar { background: var(--logo-brown); color: var(--logo-yellow); padding: 10px 30px; border-radius: 50px; font-weight: 800; margin-bottom: 20px; letter-spacing: 2px; }
+        .hero h1 { font-family: 'Montserrat'; font-size: clamp(3rem, 10vw, 6rem); margin: 0; line-height: 0.9; }
+        .hero p { margin: 25px 0; max-width: 700px; font-size: 1.1rem; line-height: 1.6; color: #555; }
 
-        /* Grid & Timeline */
-        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
-        .card {
-            background: var(--white);
-            padding: 30px;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+        /* --- SECTIONS --- */
+        .section-padding { padding: 100px 10vw; }
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; }
+        
+        .card { 
+            background: var(--logo-bg-cream); 
+            padding: 40px; 
+            border-radius: 25px; 
+            border: 2px solid transparent; 
             transition: var(--transition);
-            border-top: 5px solid var(--primary-yellow);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.03);
         }
-        .card:hover { transform: translateY(-10px); }
+        .card:hover { border-color: var(--logo-yellow); transform: translateY(-10px); }
 
-        .btn-interact {
-            background: var(--primary-yellow);
-            color: var(--deep-brown);
-            border: none;
-            padding: 12px 25px;
-            border-radius: 50px;
-            font-weight: bold;
-            cursor: pointer;
-            margin-top: 15px;
+        /* --- ROADMAP --- */
+        .timeline-container { position: relative; max-width: 1000px; margin: 60px auto; }
+        .timeline-line { position: absolute; left: 50%; transform: translateX(-50%); width: 4px; height: 100%; background: var(--logo-yellow); opacity: 0.2; }
+        .timeline-item { width: 45%; margin-bottom: 50px; position: relative; z-index: 2; cursor: pointer; }
+        .timeline-item:nth-child(even) { margin-left: auto; }
+        .timeline-content { 
+            background: #fff; padding: 30px; border-radius: 15px; 
+            box-shadow: 0 10px 20px rgba(0,0,0,0.05); transition: 0.3s;
+            border-left: 5px solid var(--logo-yellow);
         }
+        .timeline-content:hover { background: var(--logo-yellow); transform: scale(1.05); }
+        .timeline-content h3 { margin-top: 0; }
 
-        .timeline-box { background: var(--deep-brown); color: var(--white); padding: 50px; border-radius: 30px; margin-top: 60px; }
-        .timeline-item { padding: 20px; border-left: 3px solid var(--primary-yellow); margin-left: 20px; position: relative; }
-
-        #registration-modal {
-            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.8); justify-content: center; align-items: center; z-index: 2000;
+        /* --- MODALS --- */
+        .modal { display: none; position: fixed; z-index: 3000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); backdrop-filter: blur(8px); }
+        .modal-content { 
+            background: white; margin: 10% auto; padding: 50px; border-radius: 30px; 
+            max-width: 600px; text-align: center; position: relative; 
+            border: 3px solid var(--logo-yellow);
         }
-        .modal-content { background: var(--white); padding: 40px; border-radius: 20px; width: 90%; max-width: 500px; }
+        .close { position: absolute; right: 25px; top: 15px; font-size: 35px; cursor: pointer; color: var(--logo-brown); }
 
-        footer { background: var(--deep-brown); color: var(--white); text-align: center; padding: 40px; margin-top: 60px; }
+        .btn-apply { background: var(--logo-yellow); color: var(--logo-brown); padding: 15px 35px; border-radius: 50px; text-decoration: none; font-weight: 800; border: 2px solid var(--logo-yellow); transition: 0.3s; display: inline-block; }
+        .btn-apply:hover { background: transparent; color: var(--logo-yellow); }
+
+        footer { padding: 80px 20px; text-align: center; background: var(--logo-brown); color: var(--logo-bg-cream); }
+        .insta-link { color: var(--logo-yellow); text-decoration: none; font-weight: 700; font-size: 1.2rem; display: inline-block; margin-top: 20px; transition: 0.3s; }
+        .insta-link:hover { transform: scale(1.1); }
+
+        @media (max-width: 768px) { .grid-2 { grid-template-columns: 1fr; } .timeline-line { left: 20px; } .timeline-item { width: 90%; margin-left: 45px !important; } }
     </style>
 </head>
 <body>
 
-    <div class="header-logo-container">
-        <img src="1000126558.jpg" alt="SPARK.ED Logo" class="logo-circle">
-    </div>
-
-    <div id="info-panel">
-        <span class="close-panel" onclick="closePanel()">&times;</span>
-        <h2 id="panel-title" style="color: var(--deep-brown);"></h2>
-        <div id="panel-content" style="font-size: 1.1rem; line-height: 1.8;"></div>
-    </div>
+    <div id="cursor-dot"></div>
+    <div id="cursor-outline"></div>
 
     <nav>
-        <a href="#about">About</a>
-        <a href="#curriculum">Curriculum</a>
-        <a href="#timeline">Roadmap</a>
-        <a href="javascript:void(0)" onclick="toggleModal()" style="background:var(--primary-yellow); color:var(--deep-brown); padding:8px 15px; border-radius:20px;">Join Us</a>
+        <div class="nav-logo"><img src="sparked_logo.png" alt="SPARK.ED Logo"> SPARK.ED</div>
+        <div>
+            <a href="#about">About</a>
+            <a href="#mission">Mission</a>
+            <a href="#timeline">Road Map</a>
+            <a href="https://forms.gle/4XntAt2iWrvRTnkx5" target="_blank" class="btn-apply" style="padding: 8px 15px; font-size: 10px;">Join Now</a>
+        </div>
     </nav>
 
-    <header>
-        <h1>SPARK.ED</h1>
-        <p style="font-weight: 600; color: #666; letter-spacing: 2px;">VISION • INDEPENDENT PASSION • BUILD IT</p>
-    </header>
+    <section class="hero">
+        <div class="motto-bar" data-aos="fade-down">VISION → PASSION → BUILD</div>
+        <h1 data-aos="fade-up">ENGINEER YOUR<br><span style="color: var(--logo-yellow);">LEGACY</span></h1>
+        <p data-aos="fade-up" data-aos-delay="200">
+            Empowering young minds to think, feel, and lead where learning meets purpose and creativity sparks real change.
+        </p>
+        <a href="https://forms.gle/4XntAt2iWrvRTnkx5" target="_blank" class="btn-apply" data-aos="zoom-in">Apply for 2026 Admission</a>
+    </section>
 
-    <div class="container">
-        <section class="founder-section">
-            <div class="founder-text">
-                <span style="color: var(--accent-gold); font-weight: bold; text-transform: uppercase;">Meet the Founder</span>
-                <h2>Habiba Mohamed</h2>
-                <p>Guided by a mission to turn student visions into reality, Habiba Mohamed established SPARK.ED to bridge the gap between high school potential and elite academic success.</p>
+    <section id="mission" class="section-padding">
+        <div class="grid-2">
+            <div data-aos="fade-right">
+                <h2 style="font-size: 2.5rem; text-transform: uppercase;">Our Mission is Built on Two Main Parts</h2>
+                <div style="margin-bottom: 30px;">
+                    <h3 style="color: var(--logo-yellow);">1. Redefining Education</h3>
+                    <p>Education should go beyond academics. While grades matter, they are not enough to build critical thinkers who can innovate and create real impact.</p>
+                </div>
+                <div>
+                    <h3 style="color: var(--logo-yellow);">2. Guiding Students Toward Clarity</h3>
+                    <p>Many students struggle due to social pressure. We help them discover passions, set clear paths, and take real steps forward via online/offline workshops.</p>
+                </div>
+                <p style="font-weight: 700; margin-top: 20px; border-left: 4px solid var(--logo-brown); padding-left: 15px;">
+                    Because education is not just about studying. It's about becoming.
+                </p>
             </div>
-        </section>
-
-        <section id="about" style="text-align: center; margin-bottom: 60px;">
-            <h2 style="font-size: 2.5rem; color: var(--deep-brown);">Empowering Future Leaders</h2>
-            <p style="max-width: 750px; margin: auto; font-size: 1.1rem;">Sparked is an all-major inclusive platform helping students master research, excel in competitions, and navigate top-tier college admissions.</p>
-        </section>
-
-        <div class="grid" id="curriculum">
-            <div class="card">
-                <h2>Research & STEM</h2>
-                <p>Master the Scientific Method and Engineering Design Process (EDP).</p>
-                <button class="btn-interact" onclick="openPanel('Research', 'Our research module covers:<br>• Scientific Method Video Series<br>• High School Applications<br>• Professional Resource Sourcing (.edu/.org)')">Explore Module</button>
-            </div>
-
-            <div class="card">
-                <h2>Extracurriculars</h2>
-                <p>Learn how to build "Depth, Breadth, and Impact" through passion projects.</p>
-                <button class="btn-interact" onclick="openPanel('Extracurriculars', 'Strategic focus on:<br>• Passion Projects & Non-profits<br>• Summer Programs (YYGS, Pioneer)<br>• International Competitions')">Learn More</button>
-            </div>
-
-            <div class="card">
-                <h2>Admissions Strategy</h2>
-                <p>Navigate SATs, GPA, and crafting the perfect college list.</p>
-                <button class="btn-interact" onclick="openPanel('Admissions', 'Step-by-step guidance on:<br>• Motivational Letters<br>• Financial Aid & Scholarships<br>• Personal Statements')">Get Strategy</button>
+            <div class="card" data-aos="fade-left">
+                <h2 style="margin-top: 0;">OUR FINAL VISION</h2>
+                <p style="font-size: 1.2rem; line-height: 1.8;">
+                    Building a generation of self-aware, critical thinkers who pursue education with <b>purpose</b>, not pressure. 
+                    We envision a future where students are not defined by grades alone, but by their passions, clarity, and courage to choose their own paths.
+                </p>
             </div>
         </div>
+    </section>
 
-        <section class="timeline-box" id="timeline">
-            <h2 style="color: var(--primary-yellow); margin-bottom: 30px;">2026 Roadmap</h2>
-            <div class="timeline-item"><h3>Feb — Mar: Orientation</h3><p>Research basics and identifying personal passions.</p></div>
-            <div class="timeline-item"><h3>Mar — Apr: Competitions</h3><p>Preparing for honors and elite extracurricular activities.</p></div>
-            <div class="timeline-item"><h3>May — July: Workshops</h3><p>Technical skill building (Coding, Tinkercad, Design).</p></div>
-            <div class="timeline-item"><h3>Aug — Sept: Final Events</h3><p>Showcasing projects and final admissions prep.</p></div>
-        </section>
-    </div>
-
-    <div id="registration-modal">
-        <div class="modal-content">
-            <span style="float:right; cursor:pointer; font-size:24px;" onclick="toggleModal()">&times;</span>
-            <h2 style="color: var(--deep-brown);">Apply for Mentorship</h2>
-            <form onsubmit="event.preventDefault(); openPanel('Success!', 'Thank you for applying! Habiba Mohamed and the team will review your profile shortly.'); toggleModal();">
-                <input type="text" placeholder="Full Name" style="width:100%; padding:10px; margin:10px 0;" required>
-                <input type="email" placeholder="Email Address" style="width:100%; padding:10px; margin:10px 0;" required>
-                <button type="submit" class="btn-interact" style="width: 100%;">Submit</button>
-            </form>
+    <section id="about" class="section-padding" style="background: #fafafa;">
+        <div class="grid-2">
+            <div class="card" data-aos="zoom-in">
+                <h2>Our Foundation</h2>
+                <p>SPARK.ED is an inclusive, all-major platform built on the belief that student research is the ultimate differentiator. We move beyond basic tools to master the <b>Scientific Method</b> and the <b>Engineering Design Process (EDP)</b>.</p>
+                <p>Whether your interest lies in Medical Research, Political Science, or Business Networking, we provide the roadmap to winning honors.</p>
+            </div>
+            <div data-aos="fade-left">
+                <h2>Who Are We?</h2>
+                <p>Founded by <b>Habiba Mohamed</b>, SPARK.ED is an open, growing collective of students. We are not a restricted club, but a community-based organization designed for global scale.</p>
+                <p>We focus on the "How-To" of winning, ensuring every member builds a portfolio that stands out to top-tier universities through networking and professional journals.</p>
+            </div>
         </div>
-    </div>
+    </section>
+
+    <section id="timeline" class="section-padding">
+        <h2 style="text-align: center; font-size: 3rem; font-family: Montserrat;">2026 ROAD MAP</h2>
+        <p style="text-align: center; color: #666; margin-bottom: 50px;">Click each phase to unlock more details.</p>
+        
+        <div class="timeline-container">
+            <div class="timeline-line"></div>
+            
+            <div class="timeline-item" data-aos="fade-right" onclick="openModal('phase1')">
+                <div class="timeline-content">
+                    <h3>PHASE 1: FEB</h3>
+                    <p>Orientation & Vision setting. <span style="font-size: 0.8rem; display: block; margin-top: 10px; color: #888;">[Click to read more]</span></p>
+                </div>
+            </div>
+
+            <div class="timeline-item" data-aos="fade-left" onclick="openModal('phase2')">
+                <div class="timeline-content">
+                    <h3>PHASE 2: MAR-APR</h3>
+                    <p>Competitions & EC development. <span style="font-size: 0.8rem; display: block; margin-top: 10px; color: #888;">[Click to read more]</span></p>
+                </div>
+            </div>
+
+            <div class="timeline-item" data-aos="fade-right" onclick="openModal('phase3')">
+                <div class="timeline-content">
+                    <h3>PHASE 3: MAY-JUL</h3>
+                    <p>Skill Workshops & EDP Mastery. <span style="font-size: 0.8rem; display: block; margin-top: 10px; color: #888;">[Click to read more]</span></p>
+                </div>
+            </div>
+
+            <div class="timeline-item" data-aos="fade-left" onclick="openModal('phase4')">
+                <div class="timeline-content">
+                    <h3>PHASE 4: AUG-SEP</h3>
+                    <p>Admissions & Final Showcase. <span style="font-size: 0.8rem; display: block; margin-top: 10px; color: #888;">[Click to read more]</span></p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div id="phase1" class="modal"><div class="modal-content"><span class="close" onclick="closeModal('phase1')">&times;</span><h2>Phase 1: Orientation</h2><p>In this initial stage, we focus on defining research goals and identifying personal passion projects across all majors. Students are introduced to the SPARK.ED community and matched with initial resources.</p></div></div>
+    
+    <div id="phase2" class="modal"><div class="modal-content"><span class="close" onclick="closeModal('phase2')">&times;</span><h2>Phase 2: Honors</h2><p>Training begins for international honors and major-specific competitions. We help you start high-impact non-profits or launch passion projects that demonstrate leadership and initiative.</p></div></div>
+    
+    <div id="phase3" class="modal"><div class="modal-content"><span class="close" onclick="closeModal('phase3')">&times;</span><h2>Phase 3: Skills</h2><p>Mastering technical tools like Tinkercad and offline coding. This phase includes drafting strategic college lists and perfecting the Engineering Design Process (EDP) for your specific project.</p></div></div>
+    
+    <div id="phase4" class="modal"><div class="modal-content"><span class="close" onclick="closeModal('phase4')">&times;</span><h2>Phase 4: Impact</h2><p>Finalizing personal statements and showcasing major projects to potential sponsors and professional networks. We focus on ensuring your portfolio is ready for top-tier university applications.</p></div></div>
 
     <footer>
-        <p>&copy; 2026 SPARK.ED | Founder: Habiba Mohamed</p>
+        <h2 style="font-family: Montserrat; letter-spacing: 2px;">SPARK.ED</h2>
+        <p>Vision → Passion → Build.</p>
+        <a href="https://www.instagram.com/spark.ed__?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank" class="insta-link">Follow us on Instagram 📸</a>
+        <p style="opacity: 0.4; margin-top: 40px; font-size: 0.8rem;">&copy; 2026 SPARK.ED Organization. All Rights Reserved.</p>
     </footer>
 
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
-        function toggleModal() {
-            const modal = document.getElementById('registration-modal');
-            modal.style.display = (modal.style.display === 'flex') ? 'none' : 'flex';
-        }
+        AOS.init({ duration: 1000, once: true });
 
-        function openPanel(title, content) {
-            document.getElementById('panel-title').innerText = title;
-            document.getElementById('panel-content').innerHTML = content;
-            document.getElementById('info-panel').classList.add('active');
-        }
+        // Cursor Movement
+        const dot = document.getElementById('cursor-dot');
+        const outline = document.getElementById('cursor-outline');
+        window.addEventListener('mousemove', (e) => {
+            gsap.to(dot, { x: e.clientX, y: e.clientY, duration: 0 });
+            gsap.to(outline, { x: e.clientX - 20, y: e.clientY - 20, duration: 0.15 });
+        });
 
-        function closePanel() {
-            document.getElementById('info-panel').classList.remove('active');
+        // Modal Controls
+        function openModal(id) {
+            document.getElementById(id).style.display = "block";
+            confetti({ particleCount: 50, spread: 60, origin: { y: 0.7 }, colors: ['#EAB308'] });
+        }
+        function closeModal(id) {
+            document.getElementById(id).style.display = "none";
+        }
+        window.onclick = function(event) {
+            if (event.target.className === 'modal') {
+                event.target.style.display = "none";
+            }
         }
     </script>
 </body>
